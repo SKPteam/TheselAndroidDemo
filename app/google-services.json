@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "6835620414",
+    "firebase_url": "https://thesel.firebaseio.com",
+    "project_id": "thesel",
+    "storage_bucket": "thesel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:6835620414:android:8400d7033833225e169f6f",
+        "android_client_info": {
+          "package_name": "com.skiplab.theselandroiddemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "6835620414-rrdfntdsqch4hrkf3u82bnl1ddgthrq1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skiplab.theselandroiddemo",
+            "certificate_hash": "928b83972ce6c9ec0edfd33e3a9f1372a75247bf"
+          }
+        },
+        {
+          "client_id": "6835620414-6qnvi2viecndbpd1jkr1gjrjgohm90rr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUf6Xd6HzWb-XrH6hkr5b-E1NTg044yVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "6835620414-6qnvi2viecndbpd1jkr1gjrjgohm90rr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
