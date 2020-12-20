@@ -1,6 +1,7 @@
 package com.skiplab.theselandroiddemo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
@@ -8,15 +9,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.skiplab.theselandroiddemo.Activity.NotificationsFragment;
 import com.skiplab.theselandroiddemo.Adapter.MainfeedListAdapter;
 import com.skiplab.theselandroiddemo.Home.HomeFragment;
 import com.skiplab.theselandroiddemo.Home.SectionsPagerAdapter;
+import com.skiplab.theselandroiddemo.Settings.AccountSettingsActivity;
+import com.skiplab.theselandroiddemo.SharePost.PostDescription;
 
 public class Dashboard extends AppCompatActivity implements
         MainfeedListAdapter.OnLoadMoreItemsListener {
@@ -25,7 +30,7 @@ public class Dashboard extends AppCompatActivity implements
     public void onLoadMoreItems() {
         Log.d(TAG, "onLoadMoreItems: displaying more photos");
         HomeFragment fragment = (HomeFragment)getSupportFragmentManager()
-                .findFragmentByTag("android:switcher:" + R.id.viewpager_container + ":" + mViewPager.getCurrentItem());
+                .findFragmentByTag("android:switcher:" + R.id.container + ":" + mViewPager.getCurrentItem());
         if(fragment != null){
             fragment.displayMorePosts();
         }
@@ -35,6 +40,7 @@ public class Dashboard extends AppCompatActivity implements
     private static final int ACTIVITY_NUM = 0;
     private static final int HOME_FRAGMENT = 0;
     private String mUID;
+    private BottomAppBar bottomAppBar;
 
 
     private Context mContext = Dashboard.this;
@@ -61,8 +67,27 @@ public class Dashboard extends AppCompatActivity implements
         checkAuthenticationState();
         setupFirebaseAuth();
 
-        mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
-        mFrameLayout = (FrameLayout) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mFrameLayout = (FrameLayout) findViewById(R.id.frame_container);
+        bottomAppBar = findViewById(R.id.bottomAppBar);
+
+        bottomAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        //Home button
+                        break;
+                    case R.id.nav_share:
+                        startActivity(new Intent(mContext, PostDescription.class));
+                        break;
+                    case R.id.nav_settings:
+                        startActivity(new Intent(mContext, AccountSettingsActivity.class));
+                        break;
+                }
+                return false;
+            }
+        });
 
         setupViewPager();
 
@@ -99,6 +124,7 @@ public class Dashboard extends AppCompatActivity implements
             editor.apply();
         }
     }
+
 
     private void setupFirebaseAuth() {
         mAuthListener = firebaseAuth -> {

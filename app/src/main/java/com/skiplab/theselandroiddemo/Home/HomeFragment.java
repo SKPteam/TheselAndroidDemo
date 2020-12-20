@@ -1,6 +1,7 @@
 package com.skiplab.theselandroiddemo.Home;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,9 +13,11 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Switch;
@@ -32,6 +35,7 @@ import com.skiplab.theselandroiddemo.Adapter.MainfeedListAdapter;
 import com.skiplab.theselandroiddemo.R;
 import com.skiplab.theselandroiddemo.Models.Post;
 import com.skiplab.theselandroiddemo.Models.UserAccountSettings;
+import com.skiplab.theselandroiddemo.SharePost.PostDescription;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,6 +66,8 @@ public class HomeFragment extends Fragment {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private EditText sharePostEt;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,10 +77,20 @@ public class HomeFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         usersDb = FirebaseDatabase.getInstance().getReference("users");
         userAccountSettingsDb = FirebaseDatabase.getInstance().getReference("user_account_settings");
+
         mListView = (ListView) view.findViewById(R.id.list_posts);
         anonymitySwitch = view.findViewById(R.id.hide_identity_switch);
         drawerIcon = view.findViewById(R.id.drawer_icon);
         mDrawerLayout = view.findViewById(R.id.drawer_layout);
+        sharePostEt = view.findViewById(R.id.share_post_et);
+
+        sharePostEt.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                startActivity(new Intent(getActivity(), PostDescription.class));
+                return false;
+            }
+        });
 
         drawerIcon.setOnClickListener(new View.OnClickListener() {
             @Override
