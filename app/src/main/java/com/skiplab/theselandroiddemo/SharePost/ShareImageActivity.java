@@ -106,4 +106,14 @@ public class ShareImageActivity extends AppCompatActivity {
             return true;
         }
     }
+
+    /**
+     * return the current tab number
+     * 0 = GalleryFragment
+     * 1 = CameraFragment
+     * @return
+     */
+    public int getCurrentTabNumber() {
+        return mViewPager.getCurrentItem();
+    }
 }

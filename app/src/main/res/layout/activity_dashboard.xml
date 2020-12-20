@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 app:fabAlignmentMode="end"
-                app:fabCradleMargin="130dp"
+                app:fabCradleMargin="10dp"
                 app:fabCradleRoundedCornerRadius="30dp"
                 app:hideOnScroll="true"
                 app:itemIconTint="@color/colorPrimary"
