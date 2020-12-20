@@ -22,10 +22,10 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.skiplab.theselandroiddemo.Authentication.AdminRegistration;
-import com.skiplab.theselandroiddemo.Authentication.ConsultantRegistration;
-import com.skiplab.theselandroiddemo.Authentication.LoginActivity;
-import com.skiplab.theselandroiddemo.Authentication.UserRegistration;
+import com.skiplab.theselandroiddemo.Login.AdminRegistration;
+import com.skiplab.theselandroiddemo.Login.ConsultantRegistration;
+import com.skiplab.theselandroiddemo.Login.LoginActivity;
+import com.skiplab.theselandroiddemo.Login.UserRegistration;
 
 public class AuthenticationScreen extends AppCompatActivity {
 
@@ -76,7 +76,7 @@ public class AuthenticationScreen extends AppCompatActivity {
             public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setMessage("Do not register as a user if you are a counsellor");
+                builder.setMessage("Do not register as a user if you are a consultant");
                 builder.show();
 
                 i++;

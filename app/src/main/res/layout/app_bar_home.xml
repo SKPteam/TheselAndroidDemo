@@ -1,98 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Home.HomeFragment">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#F2F2F2"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            android:layout_height="wrap_content"
+            >
 
-            <RelativeLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="?attr/actionBarSize"
+                android:background="#F2F2F2">
 
-                <ImageView
-                    android:id="@+id/drawer_icon"
-                    android:src="@drawable/ic_menu"
-                    android:layout_marginRight="25dp"
-                    android:layout_centerVertical="true"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/app_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/drawer_icon"
-                    android:paddingRight="30dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="25sp" />
+                    <Switch
+                        android:id="@+id/hide_identity_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/consult_notify_layout"/>
 
-                <FrameLayout
-                    android:id="@+id/consult_notify_layout"
-                    android:layout_toLeftOf="@id/optionsToolbar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:paddingRight="5dp"
-                    android:focusable="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_centerVertical="true"
-                    android:visibility="visible">
 
                     <ImageView
-                        android:src="@drawable/ic_notifications"
+                        android:id="@+id/drawer_icon"
+                        android:src="@drawable/ic_menu"
+                        android:layout_marginRight="25dp"
+                        android:layout_centerVertical="true"
                         android:layout_width="30dp"
                         android:layout_height="30dp" />
 
                     <TextView
-                        android:id="@+id/txt_notification_badge"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="right|end|top"
-                        android:layout_marginEnd="-5dp"
-                        android:layout_marginRight="-5dp"
-                        android:layout_marginTop="1dp"
-                        android:background="@drawable/badge_background"
-                        android:gravity="center"
-                        android:padding="0.25dp"
-                        android:textColor="@android:color/white"
-                        android:text="0"
-                        android:textSize="10sp"/>
+                        android:id="@+id/app_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/drawer_icon"
+                        android:paddingRight="30dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="25sp" />
 
-                </FrameLayout>
+                    <FrameLayout
+                        android:id="@+id/consult_notify_layout"
+                        android:layout_toLeftOf="@id/optionsToolbar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:paddingRight="5dp"
+                        android:focusable="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_centerVertical="true"
+                        android:visibility="visible">
 
-                <ImageView
-                    android:id="@+id/optionsToolbar"
-                    android:src="@drawable/ic_options"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_alignParentRight="true"/>
+                        <ImageView
+                            android:src="@drawable/ic_notifications"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp" />
+
+                        <TextView
+                            android:id="@+id/txt_notification_badge"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right|end|top"
+                            android:layout_marginEnd="-5dp"
+                            android:layout_marginRight="-5dp"
+                            android:layout_marginTop="1dp"
+                            android:background="@drawable/badge_background"
+                            android:gravity="center"
+                            android:padding="0.25dp"
+                            android:textColor="@android:color/white"
+                            android:text="0"
+                            android:textSize="10sp"/>
+
+                    </FrameLayout>
+
+                    <ImageView
+                        android:id="@+id/optionsToolbar"
+                        android:src="@drawable/ic_options"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_alignParentRight="true"/>
 
 
-            </RelativeLayout>
+                </RelativeLayout>
 
-        </androidx.appcompat.widget.Toolbar>
+            </androidx.appcompat.widget.Toolbar>
 
-    </com.google.android.material.appbar.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_home" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </RelativeLayout>
+
+    <!--<include layout="@layout/content_home" />-->
+
+</merge>

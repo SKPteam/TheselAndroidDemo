@@ -23,11 +23,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Authentication.LoginActivity"></activity>
-        <activity android:name=".Authentication.AdminRegistration" />
+        <activity android:name=".SharePost.PostDescription"></activity>
+        <activity android:name=".Login.LoginActivity" />
+        <activity android:name=".Login.AdminRegistration" />
         <activity android:name=".Dashboard" />
-        <activity android:name=".Authentication.ConsultantRegistration" />
-        <activity android:name=".Authentication.UserRegistration" />
+        <activity android:name=".Login.ConsultantRegistration" />
+        <activity android:name=".Login.UserRegistration" />
         <activity android:name=".AuthenticationScreen" />
         <activity android:name=".SplashScreen">
             <intent-filter>
