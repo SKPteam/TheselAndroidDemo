@@ -119,59 +119,29 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 if (anonymitySwitch.isChecked())
                 {
-                    userAccountSettingsDb.orderByKey().equalTo(mAuth.getUid())
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                    Log.d(TAG, "Anonymity: INVISIBLE");
+                    userAccountSettingsDb.child(mAuth.getUid()).child("anonymous").setValue(true)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot ds: dataSnapshot.getChildren())
-                                    {
-                                        Log.d(TAG, "Anonymity: INVISIBLE");
-                                        UserAccountSettings userAccountSettings = ds.getValue(UserAccountSettings.class);
-                                        userAccountSettingsDb.child(mAuth.getUid()).child("anonymous").setValue(true)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                                                                .setMessage("You have hidden your identity!")
-                                                                .create();
-                                                        alertDialog.show();
-                                                    }
-                                                });
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    //..
+                                public void onSuccess(Void aVoid) {
+                                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                                            .setMessage("You have hidden your identity!")
+                                            .create();
+                                    alertDialog.show();
                                 }
                             });
                 }
                 else
                 {
-                    userAccountSettingsDb.orderByKey().equalTo(mAuth.getUid())
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                    Log.d(TAG, "Anonymity: VISIBLE");
+                    userAccountSettingsDb.child(mAuth.getUid()).child("anonymous").setValue(false)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot ds: dataSnapshot.getChildren())
-                                    {
-                                        Log.d(TAG, "Anonymity: VISIBLE");
-                                        UserAccountSettings userAccountSettings = ds.getValue(UserAccountSettings.class);
-                                        userAccountSettingsDb.child(mAuth.getUid()).child("anonymous").setValue(false)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                                                                .setMessage("You are now visible!")
-                                                                .create();
-                                                        alertDialog.show();
-                                                    }
-                                                });
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    //..
+                                public void onSuccess(Void aVoid) {
+                                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                                            .setMessage("You are now visible!")
+                                            .create();
+                                    alertDialog.show();
                                 }
                             });
                 }

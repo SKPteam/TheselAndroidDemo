@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.material.tabs.TabLayout;
-import com.skiplab.theselandroiddemo.Home.SectionsPagerAdapter;
+import com.skiplab.theselandroiddemo.Utils.SectionsPagerAdapter;
 import com.skiplab.theselandroiddemo.R;
 import com.skiplab.theselandroiddemo.Utils.Permissions;
 

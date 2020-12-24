@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.skiplab.theselandroiddemo.Activity.NotificationsFragment;
 import com.skiplab.theselandroiddemo.Adapter.MainfeedListAdapter;
 import com.skiplab.theselandroiddemo.Home.HomeFragment;
-import com.skiplab.theselandroiddemo.Home.SectionsPagerAdapter;
+import com.skiplab.theselandroiddemo.Utils.SectionsPagerAdapter;
 import com.skiplab.theselandroiddemo.Settings.AccountSettingsActivity;
 import com.skiplab.theselandroiddemo.SharePost.PostDescription;
 
