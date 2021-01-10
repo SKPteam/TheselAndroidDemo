@@ -23,7 +23,6 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -64,7 +63,7 @@ public class HomeFragment extends Fragment {
     private String[] categories;
 
     private Switch anonymitySwitch;
-    private ImageView drawerIcon, displayPicture;
+    private ImageView drawerIcon;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -81,41 +80,11 @@ public class HomeFragment extends Fragment {
         userAccountSettingsDb = FirebaseDatabase.getInstance().getReference("user_account_settings");
 
         mListView = (ListView) view.findViewById(R.id.list_posts);
+        mListView.isStackFromBottom();
         anonymitySwitch = view.findViewById(R.id.hide_identity_switch);
         drawerIcon = view.findViewById(R.id.drawer_icon);
-        displayPicture = view.findViewById(R.id.avatarIv);
         mDrawerLayout = view.findViewById(R.id.drawer_layout);
         sharePostEt = view.findViewById(R.id.share_post_et);
-
-        userAccountSettingsDb.orderByKey()
-                .equalTo(mAuth.getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        for (DataSnapshot ds: dataSnapshot.getChildren())
-                        {
-
-                            UserAccountSettings userAccountSettings = ds.getValue(UserAccountSettings.class);
-                            //Get current user profile picture
-                            try {
-                                Glide
-                                        .with(getActivity())
-                                        .load(userAccountSettings.getProfile_photo())
-                                        .placeholder(R.drawable.default_image)
-                                        .into(displayPicture);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
 
         sharePostEt.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -200,19 +169,17 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
 
-
                     Post post = new Post();
                     Map<String, Object> objectMap = (HashMap<String, Object>) singleSnapshot.getValue();
 
                     post.setpDescription(objectMap.get("pDescription").toString());
-                    post.setuName(objectMap.get("uName").toString());
                     post.setpCategory(objectMap.get("pCategory").toString());
                     post.setuMood(objectMap.get("uMood").toString());
+                    post.setuName(objectMap.get("uName").toString());
                     //post.setTags(objectMap.get("tags").toString());
                     post.setpId(objectMap.get("pId").toString());
                     post.setUid(objectMap.get("uid").toString());
                     post.setpTime(objectMap.get("pTime").toString());
-                    //post.setpImage(objectMap.get("pImage").toString());
                     post.setuDp(objectMap.get("uDp").toString());
 
                     mPosts.add(post);

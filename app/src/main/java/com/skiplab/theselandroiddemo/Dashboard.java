@@ -63,6 +63,8 @@ public class Dashboard extends AppCompatActivity implements
 
         mAuth = FirebaseAuth.getInstance();
 
+        //mAuth.signOut();
+
         checkAuthenticationState();
         setupFirebaseAuth();
 

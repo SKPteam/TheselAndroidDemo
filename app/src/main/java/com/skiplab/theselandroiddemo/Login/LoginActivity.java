@@ -295,32 +295,9 @@ public class LoginActivity extends AppCompatActivity {
 
             if (user != null)
             {
-                Log.d( TAG, "onAuthStateChanged: signed_in: " + user.getUid());
-                /*Toast.makeText( LoginActivity.this, "Authenticated with: "+ user.getEmail(),
-                        Toast.LENGTH_SHORT ).show();*/
-                DatabaseReference usersRef = db.getReference("users");
-                Query query = usersRef.orderByKey().equalTo(user.getUid());
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds: dataSnapshot.getChildren()){
-                            User user1 = ds.getValue(User.class);
-
-                            Intent intent = new Intent( LoginActivity.this, Dashboard.class );
-                            startActivity( intent );
-                            finish();
-
-                            /*AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                            builder.setMessage(user1.getUsername() + ", " + user.getEmail() );
-                            builder.show();*/
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        //..
-                    }
-                });
+                Intent intent = new Intent( LoginActivity.this, Dashboard.class );
+                startActivity( intent );
+                finish();
 
             } else {
                 Log.d( TAG, "onAuthStateChanged: signed_out");

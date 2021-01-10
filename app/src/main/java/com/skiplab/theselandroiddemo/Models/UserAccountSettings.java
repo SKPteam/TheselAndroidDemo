@@ -2,19 +2,20 @@ package com.skiplab.theselandroiddemo.Models;
 
 public class UserAccountSettings {
 
-    String profile_photo, bio, date_created;
-    String location, acc_number, bank_name, day_time, night_time, expertise_one,  expertise_two, expertise_three;
+    String profile_photo, bio, date_created, uid;
+    String location, acc_number, bank_name, day_time, night_time, expertise_one, expertise_two, expertise_three;
     String selectedCategory, isStaff;
     long day_of_birth, month_of_birth, year_of_birth, posts;
-    boolean everify, onlineStatus, isDisabled, isAnonymous;
+    boolean everify, onlineStatus, isDisabled, anonymous;
 
     public UserAccountSettings() {
     }
 
-    public UserAccountSettings(String profile_photo, String bio, String date_created, String location, String acc_number, String bank_name, String day_time, String night_time, String expertise_one, String expertise_two, String expertise_three, String selectedCategory, String isStaff, long day_of_birth, long month_of_birth, long year_of_birth, long posts, boolean everify, boolean onlineStatus, boolean isDisabled, boolean isAnonymous) {
+    public UserAccountSettings(String profile_photo, String bio, String date_created, String uid, String location, String acc_number, String bank_name, String day_time, String night_time, String expertise_one, String expertise_two, String expertise_three, String selectedCategory, String isStaff, long day_of_birth, long month_of_birth, long year_of_birth, long posts, boolean everify, boolean onlineStatus, boolean isDisabled, boolean anonymous) {
         this.profile_photo = profile_photo;
         this.bio = bio;
         this.date_created = date_created;
+        this.uid = uid;
         this.location = location;
         this.acc_number = acc_number;
         this.bank_name = bank_name;
@@ -32,7 +33,7 @@ public class UserAccountSettings {
         this.everify = everify;
         this.onlineStatus = onlineStatus;
         this.isDisabled = isDisabled;
-        this.isAnonymous = isAnonymous;
+        this.anonymous = anonymous;
     }
 
     public String getProfile_photo() {
@@ -57,6 +58,14 @@ public class UserAccountSettings {
 
     public void setDate_created(String date_created) {
         this.date_created = date_created;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getLocation() {
@@ -196,10 +205,10 @@ public class UserAccountSettings {
     }
 
     public boolean isAnonymous() {
-        return isAnonymous;
+        return anonymous;
     }
 
     public void setAnonymous(boolean anonymous) {
-        isAnonymous = anonymous;
+        this.anonymous = anonymous;
     }
 }
