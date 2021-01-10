@@ -8,13 +8,12 @@ import java.util.List;
 public class Post implements Parcelable {
 
     String pId, pDescription, pFilePath, pFileType, pTime, uid, uName, uDp, uMood, pCategory, tags;
-    private List<Like> likes;
-    private List<Comment> comments;
+
 
     public Post() {
     }
 
-    public Post(String pId, String pDescription, String pFilePath, String pFileType, String pTime, String uid, String uName, String uDp, String uMood, String pCategory, String tags, List<Like> likes, List<Comment> comments) {
+    public Post(String pId, String pDescription, String pFilePath, String pFileType, String pTime, String uid, String uName, String uDp, String uMood, String pCategory, String tags) {
         this.pId = pId;
         this.pDescription = pDescription;
         this.pFilePath = pFilePath;
@@ -26,8 +25,6 @@ public class Post implements Parcelable {
         this.uMood = uMood;
         this.pCategory = pCategory;
         this.tags = tags;
-        this.likes = likes;
-        this.comments = comments;
     }
 
     public static final Creator<Post> CREATOR = new Creator<Post>() {
@@ -163,22 +160,6 @@ public class Post implements Parcelable {
 
     public void setTags(String tags) {
         this.tags = tags;
-    }
-
-    public List<Like> getLikes() {
-        return likes;
-    }
-
-    public void setLikes(List<Like> likes) {
-        this.likes = likes;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
     }
 
     public static Creator<Post> getCREATOR() {

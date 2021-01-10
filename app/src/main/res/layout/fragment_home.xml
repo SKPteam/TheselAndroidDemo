@@ -23,11 +23,11 @@
         android:backgroundTint="@color/overlayBackground"
         android:backgroundTintMode="multiply"
         android:divider="@android:color/transparent"
-        android:dividerHeight="20.0sp"
+        android:dividerHeight="30.0sp"
         android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+        android:layout_height="match_parent"
+        android:paddingBottom="80dp"/>
 
 
 

@@ -1,6 +1,7 @@
 package com.skiplab.theselandroiddemo.Adapter;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -10,20 +11,23 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.skiplab.theselandroiddemo.R;
 import com.skiplab.theselandroiddemo.Utils.Heart;
 import com.skiplab.theselandroiddemo.Utils.SquareImageView;
 import com.skiplab.theselandroiddemo.Models.Post;
 import com.skiplab.theselandroiddemo.Models.User;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -74,6 +78,7 @@ public class MainfeedListAdapter extends ArrayAdapter<Post> {
             holder = new ViewHolder();
 
             holder.uName = (TextView) convertView.findViewById(R.id.uNameTv);
+            holder.uMood = convertView.findViewById(R.id.uMoodTv);
             holder.pImage = (SquareImageView) convertView.findViewById(R.id.pImageIv);
             holder.heartRed = (ImageView) convertView.findViewById(R.id.image_heart_red);
             holder.heartWhite = (ImageView) convertView.findViewById(R.id.image_heart);
@@ -95,14 +100,28 @@ public class MainfeedListAdapter extends ArrayAdapter<Post> {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        //convert timestamp to dd/mm/yyyy hh:mm am/pm
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        calendar.setTimeInMillis(Long.parseLong(getItem(position).getpTime()));
+        String pTime = DateFormat.format("dd/MM/yyyy   hh:mm aa", calendar).toString();
+
         try{
             holder.pDesc.setText(getItem(position).getpDescription());
             holder.pCategory.setText(getItem(position).getpCategory());
             holder.uName.setText(getItem(position).getuName());
+            holder.uMood.setText(getItem(position).getuMood());
+            holder.pTime.setText(pTime);
 
             //set the profile image
-            final ImageLoader imageLoader = ImageLoader.getInstance();
-            //imageLoader.displayImage(getItem(position).getpImage(), holder.pImage);
+            try {
+                Glide
+                        .with(mContext)
+                        .load(getItem(position).getuDp())
+                        .placeholder(R.drawable.default_image)
+                        .into(holder.uDp);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             //get the profile image and username
         /*DatabaseReference reference = FirebaseDatabase.getInstance().getReference();

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/cardView"
-    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardBackgroundColor="#EBEBEB"
     app:cardCornerRadius="10dp"
     app:cardElevation="3dp"
     app:contentPadding="5dp"
@@ -35,7 +35,7 @@
                     android:layout_marginLeft="6dp"
                     android:text=""
                     android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="#CBA300"
                     android:textSize="18sp"/>
 
                 <ImageView
@@ -44,6 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:background="@null"
+                    android:tint="@color/colorPrimaryDark"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/ic_more"/>
 
@@ -96,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:paddingTop="2dp"
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:text="" />
 
             </LinearLayout>
@@ -108,7 +109,7 @@
             android:id="@+id/pDescTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             android:textAppearance="@style/TextAppearance.AppCompat.Display3"
             android:text=""
@@ -154,6 +155,7 @@
                     android:id="@+id/heartLayout">
 
                     <ImageView
+                        android:src="@drawable/ic_liked"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:id="@+id/image_heart_red"
@@ -161,6 +163,7 @@
                         android:visibility="invisible"/>
 
                     <ImageView
+                        android:src="@drawable/ic_like"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:id="@+id/image_heart"
@@ -180,6 +183,7 @@
                     android:textColor="#ffffff"/>
 
                 <ImageView
+                    android:src="@drawable/ic_comment"
                     android:id="@+id/commentBtn"
                     android:background="@null"
                     android:layout_gravity="center_vertical"
@@ -194,14 +198,14 @@
             android:layout_below="@id/likeCommentLayout"
             android:layout_width="match_parent"
             android:layout_marginTop="5dp"
-            android:background="#aaaaaa"
+            android:background="@color/colorPrimary"
             android:layout_height="0.2dp" />
 
         <TextView
             android:id="@+id/pCategoryTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorPrimary"
             android:textSize="15sp"
             android:text=""
             android:textAppearance="@style/TextAppearance.AppCompat.Display4"

@@ -77,9 +77,9 @@ public class Dashboard extends AppCompatActivity implements
                     case R.id.nav_home:
                         //Home button
                         break;
-                    case R.id.nav_share:
-                        startActivity(new Intent(mContext, PostDescription.class));
-                        break;
+//                    case R.id.nav_share:
+//                        startActivity(new Intent(mContext, PostDescription.class));
+//                        break;
                     case R.id.nav_settings:
                         startActivity(new Intent(mContext, AccountSettingsActivity.class));
                         break;
