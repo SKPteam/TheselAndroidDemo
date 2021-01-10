@@ -17,8 +17,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.skiplab.theselandroiddemo.Models.Like;
 import com.skiplab.theselandroiddemo.R;
 import com.skiplab.theselandroiddemo.Utils.Heart;
 import com.skiplab.theselandroiddemo.Utils.SquareImageView;
@@ -44,6 +51,7 @@ public class MainfeedListAdapter extends ArrayAdapter<Post> {
     private int mLayoutResource;
     private Context mContext;
     private DatabaseReference mReference;
+    private FirebaseAuth mAuth;
     private String currentUsername = "";
 
     public MainfeedListAdapter(@NonNull Context context, int resource, @NonNull List<Post> objects) {
@@ -52,6 +60,7 @@ public class MainfeedListAdapter extends ArrayAdapter<Post> {
         mLayoutResource = resource;
         this.mContext = context;
         mReference = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
     }
 
     static class ViewHolder{
@@ -89,9 +98,6 @@ public class MainfeedListAdapter extends ArrayAdapter<Post> {
             holder.pTime = (TextView) convertView.findViewById(R.id.timestampTv);
             holder.uDp = (CircleImageView) convertView.findViewById(R.id.uPictureIv);
             holder.pCategory = convertView.findViewById(R.id.pCategoryTv);
-            holder.heart = new Heart(holder.heartWhite, holder.heartRed);
-            holder.post = getItem(position);
-            holder.detector = new GestureDetector(mContext, new GestureListener(holder));
             //holder.users = new StringBuilder();
 
             convertView.setTag(holder);
@@ -100,10 +106,47 @@ public class MainfeedListAdapter extends ArrayAdapter<Post> {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        holder.post = getItem(position);
+        holder.detector = new GestureDetector(mContext, new GestureListener(holder));
+        //holder.users = new StringBuilder();
+        holder.heart = new Heart(holder.heartWhite, holder.heartRed);
+
         //convert timestamp to dd/mm/yyyy hh:mm am/pm
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
         calendar.setTimeInMillis(Long.parseLong(getItem(position).getpTime()));
         String pTime = DateFormat.format("dd/MM/yyyy   hh:mm aa", calendar).toString();
+
+        setLikes(holder, holder.post.getpId());
+
+//        private void setLikes(final PostViewHolder holder, final String postKey)
+//        {
+//            likesRef.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    if (dataSnapshot.child(postKey).hasChild(myUid)){
+//                        //user has like this post
+//                        /*To indicate this post is liked by this (signed in)  user
+//                         * Chang drawable left icon of like button
+//                         * Change text of like button from "Like" to "Liked"*/
+//                        holder.mHeartWhite.setImageResource(R.drawable.ic_liked);
+//                    }
+//                    else {
+//                        holder.mHeartWhite.setImageResource(R.drawable.ic_like);
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//                    //..
+//                }
+//            });
+//        }
+
+//        if (holder.likeByCurrentUser){
+//            holder.heartWhite.setVisibility(View.GONE);
+//            holder.heartRed.setVisibility(View.VISIBLE);
+//        }
+
 
         try{
             holder.pDesc.setText(getItem(position).getpDescription());
@@ -111,6 +154,15 @@ public class MainfeedListAdapter extends ArrayAdapter<Post> {
             holder.uName.setText(getItem(position).getuName());
             holder.uMood.setText(getItem(position).getuMood());
             holder.pTime.setText(pTime);
+
+
+            holder.heartWhite.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    Log.d(TAG, "onTouch: red detected" );
+                    return holder.detector.onTouchEvent(motionEvent);
+                }
+            });
 
             //set the profile image
             try {
@@ -164,6 +216,33 @@ public class MainfeedListAdapter extends ArrayAdapter<Post> {
         return convertView;
     }
 
+    private void setLikes(ViewHolder holder, String postKey) {
+
+        Query query = mReference
+                .child("likes")
+                .child(postKey);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild(mAuth.getCurrentUser().getUid())){
+                    holder.heartWhite.setVisibility(View.GONE);
+                    holder.heartRed.setVisibility(View.VISIBLE);
+                }
+                else {
+                    holder.heartWhite.setVisibility(View.GONE);
+                    holder.heartRed.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     private boolean reachedEndOfList(int position){
         return position == getCount() - 1;
     }
@@ -200,7 +279,81 @@ public class MainfeedListAdapter extends ArrayAdapter<Post> {
         public boolean onDoubleTap(MotionEvent e) {
             Log.d(TAG, "onDoubleTap: double tap detected.");
 
+            Query query = mReference
+                    .child("likes")
+                    .child(mHolder.post.getpId());
+
+                   query .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot singleSnapshot: dataSnapshot.getChildren())
+                            {
+                                String keyID = singleSnapshot.child(mAuth.getCurrentUser().getUid()).getKey();
+
+                                if (singleSnapshot.getValue(Like.class).getUser_id()
+                                        .equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                                {
+                                    Toast.makeText(mContext, "YES!!!", Toast.LENGTH_SHORT).show();
+                                    mHolder.heart.toggleLike();
+                                    //mHolder.heartWhite.setVisibility(View.VISIBLE);
+                                    //mHolder.heartRed.setVisibility(View.GONE);
+                                }
+                                else
+                                {
+                                    Toast.makeText(mContext, "NOOOO!!!", Toast.LENGTH_SHORT).show();
+                                    //mHolder.heartWhite.setVisibility(View.VISIBLE);
+                                    //mHolder.heartRed.setVisibility(View.GONE);
+                                }
+
+                            }
+
+                            if(!dataSnapshot.exists()){
+                                //add new like
+                                addNewLike(mHolder);
+                                //mHolder.likeByCurrentUser = true;
+                            } else if (!dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).exists())
+                            {
+                                addNewLike(mHolder);
+                                //mHolder.likeByCurrentUser = true;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
             return true;
         }
+    }
+
+    private void addNewLike(ViewHolder mHolder) {
+
+        Like like = new Like();
+        like.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        mHolder.heartWhite.setVisibility(View.GONE);
+        mHolder.heartRed.setVisibility(View.VISIBLE);
+
+        mHolder.heart.toggleLike();
+
+        mReference
+                .child("likes")
+                .child(mHolder.post.getpId())
+                .child(mAuth.getCurrentUser().getUid())
+                .setValue(like)
+        .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                mHolder.heartWhite.setVisibility(View.GONE);
+                mHolder.heartRed.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        //mHolder.likeByCurrentUser = true;
+
     }
 }
