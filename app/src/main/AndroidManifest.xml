@@ -23,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SharePost.ShareImageActivity"></activity>
+        <activity android:name=".SharePost.SelectCategory"></activity>
+        <activity android:name=".SharePost.SelectMood" />
         <activity android:name=".Settings.AccountSettingsActivity" />
         <activity android:name=".SharePost.PostDescription" />
         <activity android:name=".Login.LoginActivity" />

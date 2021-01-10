@@ -218,6 +218,8 @@ public class MainfeedListAdapter extends ArrayAdapter<Post> {
 
     private void setLikes(ViewHolder holder, String postKey) {
 
+        holder.likeByCurrentUser = false;
+
         Query query = mReference
                 .child("likes")
                 .child(postKey);
@@ -225,14 +227,41 @@ public class MainfeedListAdapter extends ArrayAdapter<Post> {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild(mAuth.getCurrentUser().getUid())){
-                    holder.heartWhite.setVisibility(View.GONE);
-                    holder.heartRed.setVisibility(View.VISIBLE);
+                if (dataSnapshot.exists()){
+
+                    Query query1 =  dataSnapshot.getRef()
+                            .orderByChild("user_id")
+                            .equalTo(mAuth.getCurrentUser().getUid());
+
+                    query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()){
+                                holder.heartWhite.setVisibility(View.GONE);
+                                holder.heartRed.setVisibility(View.VISIBLE);
+                            }
+                            else
+                            {
+                                holder.heartWhite.setVisibility(View.GONE);
+                                holder.heartRed.setVisibility(View.VISIBLE);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
-                else {
-                    holder.heartWhite.setVisibility(View.GONE);
-                    holder.heartRed.setVisibility(View.VISIBLE);
-                }
+//                if (dataSnapshot.hasChild(mAuth.getCurrentUser().getUid())){
+//                    holder.heartWhite.setVisibility(View.GONE);
+//                    holder.heartRed.setVisibility(View.VISIBLE);
+//                }
+//                else {
+//                    holder.heartWhite.setVisibility(View.GONE);
+//                    holder.heartRed.setVisibility(View.VISIBLE);
+//                }
             }
 
             @Override
